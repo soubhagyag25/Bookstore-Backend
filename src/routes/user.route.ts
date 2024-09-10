@@ -1,6 +1,6 @@
 import express, { IRouter } from 'express';
 import UserController from '../controllers/user.controller';
-import { ResetAuth_User } from '../middlewares/auth.middleware';
+import { ResetAuth_Admin, ResetAuth_User } from '../middlewares/auth.middleware';
 import UserValidator from '../validators/user.validator';
 
 class UserRoutes {
@@ -28,8 +28,14 @@ class UserRoutes {
     //! Forget Password Route
     this.router.post('/forget-password', this.userValidator.validateForgetPassword, this.userController.forgetPassword);
 
+    //! Forget Password Route
+    this.router.post('/forget-passwordAdmin', this.userValidator.validateForgetPassword, this.userController.forgetPasswordAdmin);
+
     //! Reset Password with Login Token Route
     this.router.post('/reset-password', ResetAuth_User, this.userValidator.validateResetPassword, this.userController.resetPasswordWithToken);
+
+    //! Reset Password with Login Token Route
+    this.router.post('/reset-passwordAdmin', ResetAuth_Admin, this.userValidator.validateResetPassword, this.userController.resetPasswordWithTokenAdmin);
   }
 
   public getRoutes(): IRouter {

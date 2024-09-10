@@ -1,16 +1,14 @@
-// src/services/user.service.ts
-
 import bcrypt from 'bcrypt';
 import { hash } from 'bcrypt';
 import User from '../models/user'; 
 import { IUser } from '../interfaces/user.interface'; 
 import { UserDTO } from '../interfaces/user.dto';
 import jwt from 'jsonwebtoken';
-import { sendEmail } from '../utils/emailsender';
+import { sendEmail } from '../utils/EmailSender';
 
 class UserService {
 
-  //! Sign Up or Creating a new User
+  //! Sign Up or Creating a new User/Admin
   public SignUp = async (body: IUser, isAdmin: boolean = false) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(body.password, saltRounds);
@@ -100,6 +98,7 @@ class UserService {
     return { reset_token }; // Returning it for testing purpose
   };
 
+  
   //! Update User's Password
   public updateUserPassword = async (userId: string, newPassword: string) => {
     const hashedPassword = await hash(newPassword, 10);
@@ -127,7 +126,5 @@ class UserService {
     const hashedPassword = await hash(newPassword, 10);
     return User.update({ password: hashedPassword }, { where: { id: adminId, role: 'admin' } }); // Ensure role is 'admin'
   };
-
 }
-
 export default UserService;

@@ -42,7 +42,7 @@ User.init(
   },
   {
     sequelize,
-    modelName: 'Bookstore Users',
+    modelName: 'Book_Users',
   }
 );
 

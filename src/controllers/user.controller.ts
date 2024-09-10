@@ -115,7 +115,7 @@ class UserController {
     const { newPassword } = req.body;
 
     try {
-      const decoded: any = jwt.verify(token, process.env.RESET_SECRET_KEY!);
+      const decoded: any = jwt.verify(token, process.env.RESET_SECRET_KEY_USER!);
       await this.UserService.updateUserPassword(decoded.id, newPassword);
 
       return res.status(HttpStatus.OK).json({ message: 'Password has been changed successfully' });
