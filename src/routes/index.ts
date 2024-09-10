@@ -1,4 +1,3 @@
-//src>routes>index.ts
 import express, { IRouter } from 'express';
 import userRoute from './user.route';
 
