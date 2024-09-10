@@ -1,37 +1,29 @@
 import express, { IRouter } from 'express';
-import userController from '../controllers/user.controller';
-import userValidator from '../validators/user.validator';
-import { userAuth } from '../middlewares/auth.middleware';
+import UserController from '../controllers/user.controller';
+import { ResetAuth } from '../middlewares/auth.middleware';
+import UserValidator from '../validators/user.validator';
 
 class UserRoutes {
-  private UserController = new userController();
+  private UserController = new UserController();
+  private UserValidator = new UserValidator();
   private router = express.Router();
-  private UserValidator = new userValidator();
 
   constructor() {
     this.routes();
   }
 
   private routes = () => {
+    //! Route to Sign Up for a new USER
+    this.router.post('/signup', this.UserValidator.validateSignUp, this.UserController.SignUp);
 
-    //route to get all users
-    this.router.get('', this.UserController.getAllUsers);
+    //! Route for user login
+    this.router.post('/login', this.UserValidator.validateLogin, this.UserController.loginUser);
 
-    //route to create a new user
-    this.router.post(
-      '',
-      this.UserValidator.newUser,
-      this.UserController.newUser
-    );
+    //! Forget Password Route
+    this.router.post('/forget-password', this.UserValidator.validateForgetPassword, this.UserController.forgetPassword);
 
-    //route to get a single user by their id
-    this.router.get('/:id', userAuth, this.UserController.getUser);
-
-    //route to update a user by their id
-    this.router.put('/:id', this.UserController.updateUser);
-
-    //route to delete a user by their id
-    this.router.delete('/:id', this.UserController.deleteUser);
+    //! Reset Password with Login Token Route
+    this.router.post('/reset-password', ResetAuth, this.UserValidator.validateResetPassword, this.UserController.resetPasswordWithToken);
   };
 
   public getRoutes = (): IRouter => {

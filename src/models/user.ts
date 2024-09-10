@@ -1,33 +1,44 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use strict';
-import { Model } from 'sequelize';
-import { IUser } from '../interfaces/user.interface';
+//src>models>user.ts
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../config/database';
 
-export default (sequelize, DataTypes) => {
-  class User extends Model<IUser> implements IUser {
-    public firstName;
-    public lastName;
-    public email;
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  User.init(
-    {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
-      email: DataTypes.STRING
+class User extends Model {
+  public id!: number;
+  public firstName!: string;
+  public lastName!: string;
+  public email!: string;
+  public password!: string;
+}
+
+User.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    {
-      sequelize,
-      modelName: 'user'
-    }
-  );
-  return User;
-};
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    modelName: 'Bookstore Users',
+  }
+);
+
+export default User;

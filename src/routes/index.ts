@@ -1,15 +1,12 @@
+//src>routes>index.ts
 import express, { IRouter } from 'express';
-const router = express.Router();
-
 import userRoute from './user.route';
 
-/**
- * Function contains Application routes
- *
- * @returns router
- */
+const router = express.Router();
+router.use(express.json());
+
 const routes = (): IRouter => {
-  router.get('/', (req, res) => {
+  router.get('/home', (req, res) => {
     res.json('Welcome');
   });
   router.use('/users', new userRoute().getRoutes());
