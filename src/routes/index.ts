@@ -3,7 +3,7 @@ import userRoute from './user.route';
 import BookRoutes from './book.routes';
 import CartRoutes from './cart.route';
 import OrderRoutes from './order.route';
-
+import WishlistRoutes from './wishlist.route';
 const router = express.Router();
 router.use(express.json());
 
@@ -15,6 +15,7 @@ const routes = (): IRouter => {
   router.use('/books', new BookRoutes().router);
   router.use('/cart', new CartRoutes().router);
   router.use('/orders', new OrderRoutes().router); 
+  router.use('/wishlist', new WishlistRoutes().router);
 
   return router;
 };
