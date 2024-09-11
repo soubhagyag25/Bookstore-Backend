@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { hash } from 'bcrypt';
-import User from '../models/user'; 
+import {User} from '../models/user'; 
 import { IUser } from '../interfaces/user.interface'; 
 import { UserDTO } from '../interfaces/user.dto';
 import jwt from 'jsonwebtoken';

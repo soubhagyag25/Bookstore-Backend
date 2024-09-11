@@ -1,6 +1,5 @@
-//src>models>user.ts
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database';
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/database'; 
 
 class User extends Model {
   public id!: number;
@@ -39,11 +38,10 @@ User.init(
       type: DataTypes.ENUM('user', 'admin'),  
       defaultValue: 'user',                   
     },
-  },
-  {
-    sequelize,
-    modelName: 'Book_Users',
-  }
-);
+  }, {
+  sequelize,
+  modelName: 'User',
+  tableName: 'Book_Users',
+});
 
-export default User;
+export { User };

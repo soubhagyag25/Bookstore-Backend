@@ -16,7 +16,7 @@ class BookRoutes {
         this.router.post('/addBook', adminAuth, this.bookController.addBook.bind(this.bookController));
         this.router.get('/getAll', userAuth, this.bookController.getAllBooks.bind(this.bookController));
         this.router.get('/getAllBooks', adminAuth, this.bookController.getAllBooks.bind(this.bookController));
-        this.router.get('/:id', userAuth, this.bookController.getBookById.bind(this.bookController));
+        this.router.get('/:id/get', userAuth, this.bookController.getBookById.bind(this.bookController));
         this.router.get('/:id', adminAuth, this.bookController.getBookById.bind(this.bookController));
         this.router.put('/:id/update', adminAuth, this.bookController.updateBook.bind(this.bookController));
         this.router.delete('/:id/delete', adminAuth, this.bookController.deleteBook.bind(this.bookController));

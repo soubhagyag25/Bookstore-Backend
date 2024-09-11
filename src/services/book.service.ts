@@ -1,7 +1,9 @@
-import Book from '../models/books';
+import {Book} from '../models/books';
 import { Request } from 'express';
 
 class BookService {
+
+    //! Admin can add the Books into the Database
     public async createBook(req: Request) {
         const { bookName, author, qty, price, description } = req.body;
         const adminId = req.user?.id; // Extract adminId from request
@@ -34,6 +36,7 @@ class BookService {
         return await Book.findByPk(id);
     }
 
+    //! Admin can Update the Book's Metadata like qty,price or author
     public async updateBook(id: number, bookData: any) {
         const book = await Book.findByPk(id);
         if (!book) throw new Error('Book not found');
@@ -58,7 +61,7 @@ class BookService {
 
         return await book.save();
     }
-
+    //! Admin can delete the book from the Database
     public async deleteBook(id: number) {
         const book = await Book.findByPk(id);
         if (!book) throw new Error('Book not found');
