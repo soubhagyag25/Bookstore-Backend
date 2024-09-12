@@ -1,0 +1,715 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Bookstore API",
+      "version": "1.0.0",
+      "description": "API documentation for managing books, carts, orders, and wishlists in a bookstore."
+    },
+    "servers": [
+      {
+        "url": "http://localhost:4000/api/v1",
+        "description": "Local development server"
+      }
+    ],
+    "paths": {
+      "/users/signup": {
+        "post": {
+          "summary": "Sign up a new user",
+          "tags": ["User"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSignUp"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User signed up successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/users/signupAdmin": {
+        "post": {
+          "summary": "Sign up as an admin",
+          "tags": ["User"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSignUp"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Admin signed up successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/users/login": {
+        "post": {
+          "summary": "Login a user",
+          "tags": ["User"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLogin"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/users/loginAdmin": {
+        "post": {
+          "summary": "Login as an admin",
+          "tags": ["User"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLogin"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Admin login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/books/addBook": {
+        "post": {
+          "summary": "Add a new book",
+          "tags": ["Book"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookCreate"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Book created successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/books/{id}/update": {
+        "put": {
+          "summary": "Update a book",
+          "tags": ["Book"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookUpdate"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Book updated successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "404": {
+              "description": "Book not found"
+            }
+          }
+        }
+      },
+      "/books/{id}/delete": {
+        "delete": {
+          "summary": "Delete a book",
+          "tags": ["Book"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Book deleted successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "404": {
+              "description": "Book not found"
+            }
+          }
+        }
+      },
+      "/cart/add": {
+        "post": {
+          "summary": "Add a book to the cart",
+          "tags": ["Cart"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartAdd"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Book added to cart successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/cart/remove": {
+        "post": {
+          "summary": "Remove a book from the cart",
+          "tags": ["Cart"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartRemove"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Book removed from cart successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/cart/viewCart": {
+        "get": {
+          "summary": "View all items in the cart",
+          "tags": ["Cart"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of items in the cart",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CartResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/orders/order": {
+        "post": {
+          "summary": "Place an order",
+          "tags": ["Order"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderPlace"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Order placed successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/orders/orders": {
+        "get": {
+          "summary": "View user orders",
+          "tags": ["Order"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of user orders",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/wishlist/add": {
+        "post": {
+          "summary": "Add a book to the wishlist",
+          "tags": ["Wishlist"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WishlistAdd"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Book added to wishlist successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/wishlist/remove": {
+        "post": {
+          "summary": "Remove a book from the wishlist",
+          "tags": ["Wishlist"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WishlistRemove"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Book removed from wishlist successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/wishlist/view": {
+        "get": {
+          "summary": "View wishlist",
+          "tags": ["Wishlist"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of wishlist items",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/WishlistResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/wishlist/admin/all": {
+        "get": {
+          "summary": "View all wishlists (Admin)",
+          "tags": ["Wishlist"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of all wishlists",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/WishlistResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "UserSignUp": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "format": "password"
+            }
+          },
+          "required": ["firstName", "lastName", "email", "password"]
+        },
+        "UserLogin": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "format": "password"
+            }
+          },
+          "required": ["email", "password"]
+        },
+        "UserEmail": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "required": ["email"]
+        },
+        "ResetPassword": {
+          "type": "object",
+          "properties": {
+            "newPassword": {
+              "type": "string",
+              "format": "password"
+            }
+          },
+          "required": ["newPassword"]
+        },
+        "BookCreate": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "isbn": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          "required": ["title", "author", "isbn", "price"]
+        },
+        "BookUpdate": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "isbn": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        "BookResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "isbn": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "float"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "CartAdd": {
+          "type": "object",
+          "properties": {
+            "bookId": {
+              "type": "integer"
+            },
+            "quantity": {
+              "type": "integer"
+            }
+          },
+          "required": ["bookId", "quantity"]
+        },
+        "CartRemove": {
+          "type": "object",
+          "properties": {
+            "bookId": {
+              "type": "integer"
+            }
+          },
+          "required": ["bookId"]
+        },
+        "CartResponse": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BookResponse"
+              }
+            },
+            "total": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        "OrderPlace": {
+          "type": "object",
+          "properties": {
+            "cartId": {
+              "type": "integer"
+            },
+            "address": {
+              "type": "string"
+            }
+          },
+          "required": ["cartId", "address"]
+        },
+        "OrderResponse": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "string"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        "WishlistAdd": {
+          "type": "object",
+          "properties": {
+            "bookId": {
+              "type": "integer"
+            }
+          },
+          "required": ["bookId"]
+        },
+        "WishlistRemove": {
+          "type": "object",
+          "properties": {
+            "bookId": {
+              "type": "integer"
+            }
+          },
+          "required": ["bookId"]
+        },
+        "WishlistResponse": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BookResponse"
+              }
+            }
+          }
+        },
+        "UserResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ]
+  }
+  

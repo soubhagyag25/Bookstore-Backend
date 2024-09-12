@@ -4,12 +4,13 @@ dotenv.config();
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
+let swaggerDocument:any = require('../src/swagger/swaggerFile.json');
 
 import routes from './routes';
 import ErrorHandler from './middlewares/error.middleware';
 import Logger from './config/logger';
-
-import morgan from 'morgan';
 
 class App {
   public app: Application;
@@ -42,6 +43,10 @@ class App {
   }
 
   public initializeRoutes(): void {
+    // Swagger UI setup
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // Swagger UI endpoint
+    
+    // Your API routes
     this.app.use(`/api/${this.api_version}`, routes());
   }
 
