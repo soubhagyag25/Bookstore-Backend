@@ -38,8 +38,9 @@ To access protected routes, you need to authenticate and get a JWT token. Follow
     {
       "title": "Book Title",
       "author": "Author Name",
-      "isbn": "1234567890",
-      "price": 19.99
+      "qty": "50",
+      "price": "250",
+      "description":"About Book"
     }
     ```
   - **Response**: Success message and created book data.
@@ -66,10 +67,11 @@ To access protected routes, you need to authenticate and get a JWT token. Follow
   - **Body**:
     ```json
     {
-      "title": "Updated Title",
-      "author": "Updated Author",
-      "isbn": "1234567890",
-      "price": 25.99
+      "title": "Book Title",
+      "author": "Author Name",
+      "qty": "50",
+      "price": "250",
+      "description":"About Book"
     }
     ```
   - **Response**: Success message and updated book data.
@@ -124,13 +126,6 @@ To access protected routes, you need to authenticate and get a JWT token. Follow
   - **Method**: `POST`
   - **Headers**:
     - `Authorization: Bearer <your_token>`
-  - **Body**:
-    ```json
-    {
-      "cartId": 1,
-      "address": "123 Street, City, Country"
-    }
-    ```
   - **Response**: Success message and order details.
 
 - **View Orders**
