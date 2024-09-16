@@ -6,7 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-let swaggerDocument:any = require('../src/swagger/swaggerFile.json');
+let swaggerDocument: any = require('../src/swagger/swaggerFile.json');
 
 import routes from './routes';
 import ErrorHandler from './middlewares/error.middleware';
@@ -25,13 +25,16 @@ class App {
   constructor() {
     this.app = express();
     this.host = process.env.APP_HOST;
-    this.port = process.env.APP_PORT;
+    this.port = process.env.NODE_ENV === 'test' ? process.env.TEST_PORT : process.env.APP_PORT; // Use TEST_PORT for test environment
     this.api_version = process.env.API_VERSION;
 
     this.initializeMiddleWares();
     this.initializeRoutes();
     this.initializeErrorHandlers();
-    this.startApp();
+    
+    if (process.env.NODE_ENV !== 'test') {
+      this.startApp(); // Start app only if not in test environment
+    }
   }
 
   public initializeMiddleWares(): void {
@@ -64,11 +67,14 @@ class App {
     });
   }
 
+  // Expose the express app instance
   public getApp(): Application {
     return this.app;
   }
 }
 
-const app = new App();
+// Export an instance of the App class
+const appInstance = new App();
 
-export default app;
+// Export the Express app instance
+export const app = appInstance.getApp();

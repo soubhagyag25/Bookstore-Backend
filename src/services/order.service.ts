@@ -4,7 +4,7 @@ import { Book } from '../models/books';
 
 class OrderService {
     public getAllOrders = async () => {
-        return Order.findAll(); // Adjust based on your ORM/query method
+        return Order.findAll(); 
     };
       //! To Place The Order with Total Amount
       async placeOrder(userId: number) {
